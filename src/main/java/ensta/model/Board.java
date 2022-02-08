@@ -6,8 +6,14 @@ import ensta.util.Orientation;
 public class Board implements IBoard {
 
 	private static final int DEFAULT_SIZE = 10;
+	private String name;
+	private char[][] flotte;
+	private boolean[][] frappes;
 	
-	public Board() {
+	public Board(String nom, int taille) {
+		this.name = nom;
+		this.flotte = new char[taille][taille] temp;
+		this.frappes = new boolean[taille][taille] tempo;
 	}
 
 	public void print() {
