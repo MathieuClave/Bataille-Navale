@@ -4,20 +4,21 @@ import java.util.Iterator;
 
 import ensta.model.ship.AbstractShip;
 import ensta.util.Orientation;
+import ensta.model.Tile;
 
 public class Board implements IBoard {
 
 	private static final int DEFAULT_SIZE = 10;
 	private String name;
 	private int size;
-	private char[][] flotte;
+	private Tile[][] flotte;
 	private boolean[][] frappes;
 	
 	
 	public Board(String nom, int taille) {
 		this.name = nom;
 		this.size = taille;
-		this.flotte = new char[taille][taille];
+		this.flotte = new Tile[taille][taille];
 		this.frappes = new boolean[taille][taille];
 	}
 	
@@ -39,8 +40,8 @@ public class Board implements IBoard {
 			if (i<10) {System.out.print(" ");}
 			char affichage_case ;
 			for(int j=1; j<size+1; j++) {
-				if (flotte[i-1][j-1] =='D' || flotte[i-1][j-1] == 'S' ||flotte[i-1][j-1] == 'B' ||flotte[i-1][j-1] == 'C'){
-						affichage_case = flotte[i-1][j-1];
+				if (flotte[i-1][j-1].getShip().getLabel() =='D' || flotte[i-1][j-1].getShip().getLabel() == 'S' ||flotte[i-1][j-1].getShip().getLabel() == 'B' ||flotte[i-1][j-1].getShip().getLabel() == 'C'){
+						affichage_case = flotte[i-1][j-1].getShip().getLabel();
 				}
 				else { affichage_case = '.';}
 				System.out.print(affichage_case + "  ");
