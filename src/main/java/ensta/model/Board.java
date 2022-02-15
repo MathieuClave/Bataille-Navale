@@ -26,7 +26,7 @@ public class Board implements IBoard {
 	}
 	
 	public void print() {
-		System.out.println("Navires :                       Frappes :"); 
+		System.out.println(" Navires :                                Frappes :"); 
 		
 		System.out.print("   ");
 		for(int j=1; j<size+1; j++) {System.out.print(String.valueOf((char)(j + 'A' - 1)) + "  ");}

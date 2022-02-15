@@ -2,12 +2,11 @@ package ensta;
 
 import ensta.controller.Game;
 import ensta.model.Board;
+import ensta.model.Test_board;
 
 public class Main {
-
 	public static void main(String args[]) {
-        Board board = new Board ("test board", 12);
-        board.print();
+        Test_board board = new Test_board ();
     }
 
 }
