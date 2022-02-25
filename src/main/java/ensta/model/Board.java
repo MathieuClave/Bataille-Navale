@@ -150,6 +150,30 @@ public class Board implements IBoard {
 		return (this.flotte[coords.getX()][coords.getY()].getHit());
 	}
 
+	public Hit boardHitByOpponent(Coords coords){
+		Hit hit;
+		int x = coords.getX();
+		int y = coords.getY();
+		AbstractShip ship = flotte[x][y].getShip(); 
+
+		if(ship.getLabel() == 'N'){hit = Hit.MISS;} 
+		else{ 						
+			hit = Hit.STRIKE;		
+			flotte[x][y].setHit(true);
+			if(ship.isSunk()){			
+				hit = Hit.fromInt(ship.getLength()); 			}
+		}
+		return(hit);
+	}
+	
+	public void updateDoneHits(Hit hit, Coords coords){
+		int x = coords.getX();
+		int y = coords.getY();
+		if(hit.getValue()==-1){frappes[x][y]=false;}	
+		else{frappes[x][y]=true;}
+	}
+
+
 	@Override
 	public Hit sendHit(Coords res) {
 		// TODO Auto-generated method stub

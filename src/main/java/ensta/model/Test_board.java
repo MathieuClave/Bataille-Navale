@@ -18,6 +18,7 @@ public class Test_board {
 		Carrier ca = new Carrier("ca", Orientation.WEST);
 		board.putShip(bs, new Coords(1,1));
 		board.putShip(ca, new Coords(6,6));
+		board.setHit(true, new Coords(4,7));
 		board.print();
 		}
 }
