@@ -37,18 +37,27 @@ public class Player {
 	public void putShips() {
 		boolean done = false;
 		int i = 0;
+		
+		AbstractShip ship;
+		String msg;
+		Coords coords = new Coords();
+		board.print();
 
 		do {
-			AbstractShip ship = ships[i];
-			String msg = String.format("placer %d : %s(%d)", i + 1, ship.getName(), ship.getLength());
+			ship = ships[i];
+			msg = String.format("placer navire %d : %s(%d)", i + 1, ship.getName(), ship.getLength());
 			System.out.println(msg);
-			InputHelper.ShipInput res = InputHelper.readShipInput();
-			// TODO set ship orientation
-			// TODO put ship at given position
-			// TODO when ship placement successful
-			++i;
-			done = i == 5;
 
+			InputHelper.ShipInput res = InputHelper.readShipInput(board.getSize());
+
+			ship.setOrientation(res.orientation); 
+			coords.setCoords(res.x, res.y-1);
+
+			if(board.putShip(ship, coords)){
+				++i;
+				done = i == 5;
+			}
+			else{System.out.println("Not here");}
 			board.print();
 		} while (!done);
 	}
@@ -58,7 +67,7 @@ public class Player {
 		Hit hit = null;
 
 		do {
-			System.out.println("où frapper?");
+			System.out.println("où ?");
 			InputHelper.CoordInput hitInput = InputHelper.readCoordInput();
 			// TODO call sendHit on this.opponentBoard
 

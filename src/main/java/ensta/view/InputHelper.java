@@ -3,6 +3,8 @@ package ensta.view;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import ensta.view.InputHelper.ShipInput;
+
 public final class InputHelper {
 
 	private static Scanner scanner = new Scanner(System.in);
@@ -71,6 +73,33 @@ public final class InputHelper {
 				System.err.println("Format incorrect! Entrez la position sous forme 'A0'");
 			}
 		} while (!done && scanner.hasNextLine());
+
+		return res;
+	}
+
+	public static ShipInput readShipInput(int size) {
+		ShipInput res = new ShipInput();
+		String[] validOrientations = { "north", "south", "east", "west" }; 
+		boolean finished = false;
+		do {
+			try {
+				String[] in = scanner.nextLine().toLowerCase().split(" ");
+				if (in.length == 2) {
+					String coord = in[0];
+					if (Arrays.asList(validOrientations).contains(in[1])) {
+						res.orientation = in[1];
+						res.x = coord.charAt(0) - 'a';
+						res.y = Integer.parseInt(coord.substring(1, coord.length()));
+						finished = true;
+				}}} catch (Exception e) {}
+			if (!finished) {
+				System.err.println("Format : F5 south");
+			}
+			if(res.x<=-1 | res.x>=size | res.y<=-1 | res.y>=size){
+				System.err.println("ça rentre pas, tentes une autre case");
+				finished=false;
+			}
+		} while (scanner.hasNextLine() && !finished);
 
 		return res;
 	}

@@ -18,6 +18,20 @@ public class AbstractShip {
 
 	public Orientation getOrientation() {return this.orientation;}
 	public void setOrientation(Orientation orient) {this.orientation = orient;}
+	public void setOrientation(String orient) {
+        if(orient.equals(new String("north"))){
+            this.orientation = Orientation.NORTH;
+        }
+        else if(orient.equals(new String("east"))){
+            this.orientation = Orientation.EAST;
+        }
+        else if(orient.equals(new String("south"))){
+            this.orientation = Orientation.SOUTH;
+        }
+        else if(orient.equals(new String("west"))){
+            this.orientation = Orientation.WEST;
+        }
+    }
 
 	public int getLength() {return this.length;}
 	public void setLength(int length) {this.length = length;}
@@ -36,6 +50,7 @@ public class AbstractShip {
 		this.length = length;
 		this.recievedHits = 0;
 	}
+	
 
 }
 	
