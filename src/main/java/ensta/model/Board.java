@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import ensta.model.ship.AbstractShip;
 import ensta.model.ship.NoShip;
+import ensta.util.ColorUtil;
 import ensta.util.Orientation;
 import ensta.model.Tile;
 
@@ -57,15 +58,15 @@ public class Board implements IBoard {
 			System.out.print("  " + i + " ");
 			if (i<10) {System.out.print(" ");}
 			for(int j=1; j<size+1; j++) {
-				if (frappes[i-1][j-1]){
-					affichage_case = 'x';
-				}
-				else { affichage_case = '.';}
-				System.out.print(affichage_case + "  ");
+				if(frappes[i-1][j-1] == false){System.out.print(".");}
+				else if (frappes[i-1][j-1] == true) {System.out.print("X");}
+				System.out.print("  ");
 			}
 			System.out.print(System.lineSeparator());
 		}
+		
 	}
+	
 
 	public boolean canPutShip(AbstractShip ship, Coords coords) {
 		Orientation ori = ship.getOrientation();
