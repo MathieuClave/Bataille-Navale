@@ -16,5 +16,6 @@ public class Tile {
 	public Coords getCoords() {return this.coords;}
 	public AbstractShip getShip () {return this.ship;}
 	public boolean getHit () {return this.isHit;}
+	public void setHit(boolean hit) {this.isHit = hit;}
 
 }

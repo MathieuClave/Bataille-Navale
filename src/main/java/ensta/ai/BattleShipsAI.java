@@ -1,4 +1,4 @@
-package ensta.ai;
+	package ensta.ai;
 
 import java.io.Serializable;
 
@@ -136,7 +136,7 @@ public class BattleShipsAI implements Serializable {
 	}
 
 	private boolean isUndiscovered(Coords coords) {
-		return coords.isInBoard(board.getSize()) && board.getHit(coords) == null;
+		return coords.isInBoard(board.getSize()) && board.getHit(coords) == false;
 	}
 
 	private Coords pickRandomCoords() {

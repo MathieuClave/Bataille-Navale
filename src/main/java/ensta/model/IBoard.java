@@ -37,7 +37,7 @@ public interface IBoard {
      * @param coords
      * @return true if the hit is successful
      */
-    public Boolean getHit(Coords coords);
+    public boolean getHit(Coords coords);
 
 	public Hit sendHit(Coords res);
 

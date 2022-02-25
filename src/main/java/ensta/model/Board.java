@@ -3,6 +3,7 @@ package ensta.model;
 import java.util.Iterator;
 
 import ensta.model.ship.AbstractShip;
+import ensta.model.ship.NoShip;
 import ensta.util.Orientation;
 import ensta.model.Tile;
 
@@ -20,6 +21,12 @@ public class Board implements IBoard {
 		this.size = taille;
 		this.flotte = new Tile[taille][taille];
 		this.frappes = new boolean[taille][taille];
+		for (int i = 0; i<size; i++){
+			for (int j = 0; j<size; j++){
+				flotte[i][j]= new Tile(new Coords(i,j), new NoShip(), false);
+				frappes[i][j]=false;
+			}
+		}
 	}
 	
 	public Board(String nom) {
@@ -38,6 +45,7 @@ public class Board implements IBoard {
 		for (int i=1; i<size+1; i++) {
 			System.out.print(i + " ");
 			if (i<10) {System.out.print(" ");}
+			
 			char affichage_case ;
 			for(int j=1; j<size+1; j++) {
 				if (flotte[i-1][j-1].getShip().getLabel() =='D' || flotte[i-1][j-1].getShip().getLabel() == 'S' ||flotte[i-1][j-1].getShip().getLabel() == 'B' ||flotte[i-1][j-1].getShip().getLabel() == 'C'){
@@ -60,38 +68,38 @@ public class Board implements IBoard {
 	}
 
 	public boolean canPutShip(AbstractShip ship, Coords coords) {
-		Orientation o = ship.getOrientation();
+		Orientation ori = ship.getOrientation();
 		int dx = 0, dy = 0;
-		if (o == Orientation.EAST) {
+		if (ori == Orientation.EAST) {
 			if (coords.getX() + ship.getLength() >= this.size) {
 				return false;
 			}
 			dx = 1;
-		} else if (o == Orientation.SOUTH) {
+		} else if (ori == Orientation.SOUTH) {
 			if (coords.getY() + ship.getLength() >= this.size) {
 				return false;
 			}
 			dy = 1;
-		} else if (o == Orientation.NORTH) {
+		} else if (ori == Orientation.NORTH) {
 			if (coords.getY() + 1 - ship.getLength() < 0) {
 				return false;
 			}
 			dy = -1;
-		} else if (o == Orientation.WEST) {
+		} else if (ori == Orientation.WEST) {
 			if (coords.getX() + 1 - ship.getLength() < 0) {
 				return false;
 			}
 			dx = -1;
 		}
 
-		Coords iCoords = new Coords(coords);
+		Coords shipCoords = new Coords(coords);
 
 		for (int i = 0; i < ship.getLength(); ++i) {
-			if (this.hasShip(iCoords)) {
+			if (this.hasShip(shipCoords)) {
 				return false;
 			}
-			iCoords.setX(iCoords.getX() + dx);
-			iCoords.setY(iCoords.getY() + dy);
+			shipCoords.setX(shipCoords.getX() + dx);
+			shipCoords.setY(shipCoords.getY() + dy);
 		}
 
 		return true;
@@ -99,32 +107,46 @@ public class Board implements IBoard {
 
 	@Override
 	public int getSize() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.size;
 	}
 
 	@Override
 	public boolean putShip(AbstractShip ship, Coords coords) {
-		// TODO Auto-generated method stub
-		return false;
+		if(canPutShip(ship, coords)){
+			Orientation ori = ship.getOrientation();
+			int dx = 0, dy = 0;
+			if (ori == Orientation.EAST) { dx = 1;}
+			else if (ori == Orientation.NORTH) { dy = -1;}
+			else if (ori == Orientation.WEST) { dx = -1; }
+			else if (ori == Orientation.SOUTH){ dy = 1; }
+
+			Coords shipCoords = new Coords(coords);
+			for (int i = 0; i < ship.getLength(); ++i) {
+				flotte[shipCoords.getX()][shipCoords.getY()]= new Tile(coords, ship, false);  
+				shipCoords.setX(shipCoords.getX() + dx);
+				shipCoords.setY(shipCoords.getY() + dy);
+			}
+			return(true);
+		}
+		else{return(false);}
 	}
 
 	@Override
 	public boolean hasShip(Coords coords) {
-		// TODO Auto-generated method stub
-		return false;
+		if (flotte[coords.getX()][coords.getY()].getShip().getLabel() == 'N' ) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
 	public void setHit(boolean hit, Coords coords) {
-		// TODO Auto-generated method stub
-		
+		flotte[coords.getX()][coords.getY()].setHit(hit);
 	}
 
 	@Override
-	public Boolean getHit(Coords coords) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean getHit(Coords coords) {
+		return (this.flotte[coords.getX()][coords.getY()].getHit());
 	}
 
 	@Override
